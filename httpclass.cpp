@@ -28,6 +28,11 @@ void HttpClass::SetUserAgent(const QString &user_agent)
     par_user_agent = user_agent;
 }
 
+void HttpClass::SetContentType(const QString &content_type)
+{
+    par_content_type = content_type;
+}
+
 QString HttpClass::Get(const QString &url)
 {
     qDebug() << "GET : " + url;
@@ -60,7 +65,7 @@ QString HttpClass::Post(const QString &url, const QString &data)
     for (it = par_headers.begin(); it != par_headers.end(); ++it)
         request.setRawHeader(it.key().toUtf8(), it.value().toUtf8());
     request.setHeader(request.UserAgentHeader, par_user_agent);
-    request.setHeader(request.ContentTypeHeader, "application/x-www-form-urlencoded");
+    request.setHeader(request.ContentTypeHeader, par_content_type);
     request.setUrl(url);
     QNetworkReply * reply = http.post(request, data.toUtf8());
     QEventLoop wait;
